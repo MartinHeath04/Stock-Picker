@@ -33,15 +33,15 @@ class StockAnalysis {
     }
 
     public boolean checkBuySignal() {
-        if (prices.size() < 10) return false; // Ensure we have enough data
+        if (prices.size() < 10) return false; 
         BigDecimal shortMA = getMovingAverage(5);
         BigDecimal longMA = getMovingAverage(10);
-        return shortMA.compareTo(longMA) > 0; // Buy if short MA is above long MA
+        return shortMA.compareTo(longMA) > 0; 
     }
 }
 
 public class StockPicker {
-    private static final String API_KEY = "S0934TM51N4BMNU8"; // Replace with your Alpha Vantage key
+    private static final String API_KEY = "S0934TM51N4BMNU8"; 
 
     public static void main(String[] args) {
         // Fixed list of stock symbols
@@ -63,7 +63,6 @@ public class StockPicker {
             stockData.put(symbol, analysis);
         }
 
-        // Display stocks that pass the buy signal
         System.out.println("\nStocks with Buy Signals:");
         for (String symbol : stockData.keySet()) {
             if (stockData.get(symbol).checkBuySignal()) {
@@ -81,7 +80,6 @@ public class StockPicker {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
 
-            // ✅ Use try-with-resources to handle closing automatically
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
                 StringBuilder response = new StringBuilder();
                 String line;
@@ -89,7 +87,6 @@ public class StockPicker {
                     response.append(line);
                 }
 
-                // ✅ Parse JSON response to extract stock price
                 JsonObject jsonResponse = JsonParser.parseString(response.toString()).getAsJsonObject();
                 JsonObject timeSeries = jsonResponse.getAsJsonObject("Time Series (Daily)");
 
